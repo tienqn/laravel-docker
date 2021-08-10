@@ -2,18 +2,17 @@ version: '3'
 
 networks:
     backend:
-        driver: bridge
+        driver: ${NETWORKS_DRIVER}
 
 volumes:
     dbdata:
-        driver: local
+        driver: ${VOLUMES_DRIVER}
 
 services:
 
-### Workspace Utilities PHP, Git, Composer, Nodejs Service ##################################
     workspace:
         build: ./workspace
-        container_name: resumo_workspace
+        container_name: ${CONTAINER_WORKSPACE_NAME}
         restart: unless-stopped
         tty: true
         depends_on: 
@@ -22,14 +21,13 @@ services:
             - ./src:/var/www/
             - ./workspace/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         ports: 
-            - "9000:9000"
+            - "${WORKSPACE_PORT}:9000"
         networks: 
             - backend
 
-### Nginx Service ##################################
     nginx:
         build: ./nginx
-        container_name: resumo_nginx
+        container_name: ${CONTAINER_NGINX_NAME}
         restart: unless-stopped
         tty: true
         depends_on: 
@@ -39,12 +37,11 @@ services:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
         ports: 
-            - "80:80"
-            - "443:443"
+            - "${NGINX_HOST_HTTP_PORT}:80"
+            - "${NGINX_HOST_HTTPS_PORT}:443"
         networks: 
             - backend
 
-### MySQL Service  ##################################
     mysql:
         build: ./mysql
         container_name: resumo_mysql
@@ -53,11 +50,11 @@ services:
         env_file:
             - ./mysql/.env
         volumes:
-            -  dbdata:/var/lib/mysql
+            -  ${DATA_HOST}:/var/lib/mysql
             - ./mysql/my.cnf:/etc/mysql/my.cnf
             - ./mysql/conf.d/docker.cnf:/etc/mysql/conf.d/docker.cnf
             - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
         ports:
-            - "3306:3306"
+            - "${MYSQL_PORT}:3306"
         networks:
             - backend
