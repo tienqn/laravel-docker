@@ -44,7 +44,7 @@ services:
 
     mysql:
         build: ./mysql
-        container_name: resumo_mysql
+        container_name: ${CONTAINER_MYSQL_NAME}
         restart: unless-stopped
         tty: true
         env_file:
