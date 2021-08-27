@@ -47,8 +47,11 @@ services:
         container_name: ${CONTAINER_MYSQL_NAME}
         restart: unless-stopped
         tty: true
-        env_file:
-            - ./mysql/.env
+        environment:
+            -   MYSQL_ROOT_PASSWORD=root
+            -   MYSQL_DATABASE=db
+            -   MYSQL_USER=user
+            -   MYSQL_PASSWORD=123
         volumes:
             -  ${DATA_HOST}:/var/lib/mysql
         ports:
