@@ -47,13 +47,13 @@ services:
         container_name: ${CONTAINER_MYSQL_NAME}
         restart: unless-stopped
         tty: true
-        environment:
-            -   MYSQL_ROOT_PASSWORD=root
-            -   MYSQL_DATABASE=db
-            -   MYSQL_USER=user
-            -   MYSQL_PASSWORD=123
+        env_file:
+            - ./mysql/.env
         volumes:
             -  ${DATA_HOST}:/var/lib/mysql
+            - ./mysql/my.cnf:/etc/mysql/my.cnf
+            - ./mysql/conf.d/docker.cnf:/etc/mysql/conf.d/docker.cnf
+            - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
         ports:
             - "${MYSQL_PORT}:3306"
         networks:
