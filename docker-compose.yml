@@ -34,7 +34,7 @@ services:
             - workspace
         volumes: 
             - ./src:/var/www/
-            - ./nginx:/etc/nginx
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
         ports: 
             - "${NGINX_HOST_HTTP_PORT}:80"
@@ -51,7 +51,7 @@ services:
             - ./mysql/.env
         volumes:
             -  ${DATA_HOST}:/var/lib/mysql
-            - ./mysql:/etc/mysql
+            - ./mysql/my.cnf:/etc/mysql/my.cnf
             - ./mysql/conf.d/docker.cnf:/etc/mysql/conf.d/docker.cnf
             - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
         ports:
