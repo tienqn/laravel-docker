@@ -51,7 +51,6 @@ services:
             - ./mysql/.env
         volumes:
             -  ${DATA_HOST}:/var/lib/mysql
-            - ./mysql:/etc/mysql/conf.d
         ports:
             - "${MYSQL_PORT}:3306"
         networks:
