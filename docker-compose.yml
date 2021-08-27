@@ -51,7 +51,7 @@ services:
             - ./mysql/.env
         volumes:
             -  ${DATA_HOST}:/var/lib/mysql
-            - ./mysql/my.cnf:/etc/mysql/my.cnf
+#             - ./mysql/my.cnf:/etc/mysql/my.cnf
             - ./mysql/conf.d/docker.cnf:/etc/mysql/conf.d/docker.cnf
             - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
         ports:
